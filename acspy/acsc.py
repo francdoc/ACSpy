@@ -341,7 +341,7 @@ def getFPosition(hcomm, axis: int, wait=SYNCHRONOUS):
     return fposition
     
 def getTPosition(hcomm, axis: int, wait=SYNCHRONOUS):
-    """Retrieves an instant value of the motor feedback position."""
+    """Retrieves an instant value of the motor target position."""
     tposition = ctypes.c_double()
     call_acsc(acs.acsc_GetTargetPosition, hcomm, axis, byref(tposition), wait)
     tposition = tposition.value
