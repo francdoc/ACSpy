@@ -240,6 +240,13 @@ def setJerk(hcomm, axis: int, jerk: float, wait=SYNCHRONOUS):
     call_acsc(acs.acsc_SetJerk, hcomm, axis, double(jerk), wait)
 
 
+def getJerk(hcomm, axis: int, wait=SYNCHRONOUS):
+    """Returns current jerk for specified axis."""
+    val = double()
+    call_acsc(acs.acsc_GetJerk, hcomm, axis, byref(val), wait)
+    return val.value
+
+
 def setRPosition(hcomm, axis: int, rpos: float, wait=SYNCHRONOUS):
     """Asigns a current value of reference position."""
     call_acsc(acs.acsc_SetRPosition, hcomm, axis, double(rpos), wait)
@@ -335,6 +342,14 @@ def getFPosition(hcomm, axis: int, wait=SYNCHRONOUS):
     return fposition
 
 
+def getTPosition(hcomm, axis: int, wait=SYNCHRONOUS):
+    """Retrieves an instant value of the motor target position."""
+    tposition = ctypes.c_double()
+    call_acsc(acs.acsc_GetTargetPosition, hcomm, axis, byref(tposition), wait)
+    tposition = tposition.value
+    return tposition
+
+
 def registerEmergencyStop():
     """Register the software emergency stop."""
     call_acsc(acs.acsc_RegisterEmergencyStop)
@@ -406,6 +421,11 @@ def waitCommutated(hcomm, axis: int, timeout=INFINITE):
     )
 
 
+def waitMotionEnd(hcomm, axis: int, timeout=INFINITE):
+    """The function waits for the end of a motion."""
+    call_acsc(acs.acsc_WaitMotionEnd, hcomm, int32(axis), int32(timeout))
+
+
 def disable(hcomm, axis: int, wait=SYNCHRONOUS):
     """The function shuts off a motor."""
     call_acsc(acs.acsc_Disable, hcomm, int32(axis), wait)
@@ -425,12 +445,6 @@ def disableMotors(hcomm, axes: list, wait=SYNCHRONOUS):
 def getRPosition(hcomm, axis: int, wait=SYNCHRONOUS):
     pos = double()
     call_acsc(acs.acsc_GetRPosition, hcomm, axis, p(pos), wait)
-    return pos.value
-
-
-def getFPosition(hcomm, axis: int, wait=SYNCHRONOUS):
-    pos = double()
-    call_acsc(acs.acsc_GetFPosition, hcomm, axis, byref(pos), wait)
     return pos.value
 
 
