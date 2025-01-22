@@ -421,7 +421,7 @@ def waitCommutated(hcomm, axis: int, timeout=INFINITE):
     )
 
 
-def WaitMotionEnd(hcomm, axis: int, timeout=INFINITE):
+def waitMotionEnd(hcomm, axis: int, timeout=INFINITE):
     """The function waits for the end of a motion."""
     call_acsc(acs.acsc_WaitMotionEnd, hcomm, int32(axis), int32(timeout))
 
