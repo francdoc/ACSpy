@@ -448,12 +448,6 @@ def getRPosition(hcomm, axis: int, wait=SYNCHRONOUS):
     return pos.value
 
 
-def getFPosition(hcomm, axis: int, wait=SYNCHRONOUS):
-    pos = double()
-    call_acsc(acs.acsc_GetFPosition, hcomm, axis, byref(pos), wait)
-    return pos.value
-
-
 def getRVelocity(hcomm, axis: int, wait=SYNCHRONOUS):
     rvel = double()
     call_acsc(acs.acsc_GetRVelocity, hcomm, axis, byref(rvel), wait)
